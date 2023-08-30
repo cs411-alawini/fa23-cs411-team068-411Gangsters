@@ -10,7 +10,7 @@
 | Captain     | dssethi2@illinois.edu  |
 | Member1     |        PJ Ganotisi     |
 | Member1     |  pganot2@illinois.edu  |
-| Member2     |        Yav Mangel      |
+| Member2     |      Yahav Mangel      |
 | Member2     |  ymangel2@illinois.edu |
 | Member3     |    Khushal Gentela     |
 | Member3     | gentela2@illinois.edu  |
