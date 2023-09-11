@@ -25,4 +25,4 @@
 
 ## Project Summary
 
-This is a summary of the project!
+In this project, we will build a public transportation information web tool that allows users to view and plan public transport routes, calculate fares, add and view reviews for each route, and see historical trends in transportation data over the past decades. We will be using public transit data from the TA recommended Sao Paulo, Brazil public transport dataset. We will be using languages and frameworks like SQL, React, Flask, Django and more to design our web app. Ultimately, our goal is to aggregate and present public transport information in an accessible and user friendly manner. 
