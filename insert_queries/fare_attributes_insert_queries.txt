@@ -1,0 +1,6 @@
+INSERT INTO FareAttributes VALUES ("CPTM", 4.4, "BRL", 0, "", 10800);
+INSERT INTO FareAttributes VALUES ("Metrô", 4.4, "BRL", 0, "", 10800);
+INSERT INTO FareAttributes VALUES ("Ônibus", 4.4, "BRL", 0, "", 10800);
+INSERT INTO FareAttributes VALUES ("Ônibus + CPTM", 7.65, "BRL", 0, "", 10800);
+INSERT INTO FareAttributes VALUES ("Ônibus + Metrô", 7.65, "BRL", 0, "", 10800);
+INSERT INTO FareAttributes VALUES ("Ônibus + Metrô + CPTM", 12.05, "BRL", 0, "", 10800);

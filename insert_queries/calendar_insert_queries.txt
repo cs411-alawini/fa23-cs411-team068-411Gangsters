@@ -1,0 +1,6 @@
+INSERT INTO Calendar VALUES ("USD", 1, 1, 1, 1, 1, 1, 1, "20080101", "20220301");
+INSERT INTO Calendar VALUES ("U__", 1, 1, 1, 1, 1, 0, 0, "20080101", "20220301");
+INSERT INTO Calendar VALUES ("US_", 1, 1, 1, 1, 1, 1, 0, "20080101", "20220301");
+INSERT INTO Calendar VALUES ("_SD", 0, 0, 0, 0, 0, 1, 1, "20080101", "20220301");
+INSERT INTO Calendar VALUES ("__D", 0, 0, 0, 0, 0, 0, 1, "20080101", "20220301");
+INSERT INTO Calendar VALUES ("_S_", 0, 0, 0, 0, 0, 1, 0, "20080101", "20220301");
