@@ -97,7 +97,10 @@ Using the above implementation in the GCP SQL Database, we get the following ima
 ![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/73099341/090f2e34-c902-44f7-b33a-a0e6656480ea)
 
 The following are the Advanced SQL Queries that we implemented for this project:
-Fare Calculation Query:
+Fare Calculation Query once we have the wanted routes:
 ```mysql
 
+```
+User Route Input
+```
 ```
