@@ -87,3 +87,5 @@ CREATE TABLE Reviews ( RouteId VARCHAR(7),
 );
 
 ```
+Using the above implementation in the GCP SQL Database, we get the following image:
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/73099341/090f2e34-c902-44f7-b33a-a0e6656480ea)
