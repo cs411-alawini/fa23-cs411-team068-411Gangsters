@@ -30,12 +30,14 @@ CREATE TABLE Trips(	TripId VARCHAR(10),
   PRIMARY KEY(TripId, ShapeId),
   FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE 
 );
-Calendar( ServiceId VARCHAR(3) [PK], Monday INT, Tuesday INT,  Wednesday INT, Thursday INT, Friday INT, Saturday INT, Sunday INT, StartDate VARCHAR(10), EndDate VARCHAR(10))
-Shapes( ShapeId INT [PK], 
+CREATE TABLE Calendar( ServiceId VARCHAR(3), Monday INT, Tuesday INT,  Wednesday INT, Thursday INT, Friday INT, Saturday INT, Sunday INT, StartDate VARCHAR(10), EndDate VARCHAR(10), PRIMARY KEY(ServiceId));
+CREATE TABLE Shapes( ShapeId INT [PK], 
 ShapePtLat REAL, 
 ShapePtLon REAL, 
 ShapePtSequence INT [PK], 
-ShapeDistTraveled REAL)
+ShapeDistTraveled REAL
+PRIMARY KEY(ShapeId)
+)
 Frequencies (
 	FrequencyId INT [PK]
 	TripId VARCHAR(10) [FK to Trips.tripId],
