@@ -13,8 +13,8 @@ UserName VARCHAR(100),
 Password VARCHAR(255),
 PRIMARY KEY(UserId)
 );
-CREATE TABLE Routes(RouteId VARCHAR(7),
-	RouteShortName VARCHAR(7),
+CREATE TABLE Routes(RouteId VARCHAR(10),
+	RouteShortName VARCHAR(10),
 	RouteLongName VARCHAR(255),
 	RouteType INT,
 	RouteColor VARCHAR(6),
@@ -22,7 +22,7 @@ CREATE TABLE Routes(RouteId VARCHAR(7),
   PRIMARY KEY(RouteId)
 );
 CREATE TABLE Trips(	TripId VARCHAR(10),
-	RouteId VARCHAR(7),
+	RouteId VARCHAR(10),
 	ServiceId VARCHAR(3),
 	TripHeadsign VARCHAR(255),
 	DirectionId INT,
@@ -47,6 +47,7 @@ CREATE TABLE Frequencies (
 	PRIMARY KEY(FrequencyId),
 	FOREIGN KEY (TripId) REFERENCES Trips(TripId) ON DELETE CASCADE
 );
+
 CREATE TABLE Stops ( StopId INT,
 	StopName VARCHAR(255),
 	StopDesc VARCHAR(255),
@@ -54,6 +55,7 @@ CREATE TABLE Stops ( StopId INT,
 	StopLat REAL,
 	PRIMARY KEY(StopId)
 );
+
 CREATE TABLE StopTimes (StopId INT,
 	TripId VARCHAR(10),
 	ArrivalTime VARCHAR(8),
@@ -62,6 +64,7 @@ CREATE TABLE StopTimes (StopId INT,
 	FOREIGN KEY (StopId) REFERENCES Stops(StopId) ON DELETE CASCADE,
 	FOREIGN KEY (TripId) REFERENCES Trips(TripId) ON DELETE CASCADE
 );
+
 CREATE TABLE FareAttributes( FareId VARCHAR(255),
 		  Price DEC,
 	  	  CurrencyType VARCHAR(3),
@@ -70,15 +73,18 @@ CREATE TABLE FareAttributes( FareId VARCHAR(255),
 	    	  TransferDuration INT,
  		  PRIMARY KEY(FareId)
 );
-CREATE TABLE FareRules(  RouteId VARCHAR(255), 
-      FareId VARCHAR(255),
+
+CREATE TABLE FareRules(  RouteId VARCHAR(10), 
+      	FareId VARCHAR(255),
 	     OriginId VARCHAR(255),
 	      DestinationId VARCHAR(255),
 	      ContainsId VARCHAR(255),
-	PRIMARY KEY(RouteId),
+	FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE,
 	FOREIGN KEY(FareId) REFERENCES FareAttributes(FareId) ON DELETE CASCADE
+
 );
-CREATE TABLE Reviews ( RouteId VARCHAR(7),
+
+CREATE TABLE Reviews ( RouteId VARCHAR(10),
 	    UserId INT,
             Comments VARCHAR(1000),
 	    starRating INT,
