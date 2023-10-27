@@ -2,17 +2,17 @@
 
 ## Database DDL Commands
 
-```mysql
+```MySQL
 CREATE database navigator;
 
 USE navigator;
-
 
 CREATE TABLE Users(	UserId INT,  
 UserName VARCHAR(100), 
 Password VARCHAR(255),
 PRIMARY KEY(UserId)
 );
+
 CREATE TABLE Routes(RouteId VARCHAR(10),
 	RouteShortName VARCHAR(10),
 	RouteLongName VARCHAR(255),
@@ -21,6 +21,7 @@ CREATE TABLE Routes(RouteId VARCHAR(10),
 	RouteTextColor VARCHAR(6),
   PRIMARY KEY(RouteId)
 );
+
 CREATE TABLE Trips(	TripId VARCHAR(10),
 	RouteId VARCHAR(10),
 	ServiceId VARCHAR(3),
@@ -30,7 +31,9 @@ CREATE TABLE Trips(	TripId VARCHAR(10),
   PRIMARY KEY(TripId, ShapeId),
   FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE 
 );
+
 CREATE TABLE Calendar( ServiceId VARCHAR(3), Monday INT, Tuesday INT,  Wednesday INT, Thursday INT, Friday INT, Saturday INT, Sunday INT, StartDate VARCHAR(10), EndDate VARCHAR(10), PRIMARY KEY(ServiceId));
+
 CREATE TABLE Shapes( ShapeId INT, 
 ShapePtLat REAL, 
 ShapePtLon REAL, 
@@ -38,6 +41,7 @@ ShapePtSequence INT,
 ShapeDistTraveled REAL,
 PRIMARY KEY(ShapeId, ShapePtSequence)
 );
+
 CREATE TABLE Frequencies (
 	FrequencyId INT,
 	TripId VARCHAR(10),
