@@ -109,6 +109,15 @@ Fare Calculation Query once we have the wanted routes:
 ```mysql
 
 ```
-User Route Input
+User Route Query that returns the 3 closest times for the next available stop at Users input location
 ```
+select Routes.*, StopId, n.StopName,TIMEDIFF(STR_TO_DATE(DepartureTime, "%T"), DATE_ADD(CURRENT_TIME, INTERVAL -3 HOUR)) as Time_To_Departure 
+    -> from Trips 
+    -> left join Routes using (RouteId) 
+    -> left join StopTimes using (TripId)
+    -> left join (select StopName, StopId from Stops) n using(StopId)
+    -> where RouteLongName like '%Pedra Branca - %' and STR_TO_DATE(DepartureTime, "%T") > DATE_ADD(CURRENT_TIME, INTERVAL 3 HOUR) limit 3;
 ```
+Assuming that a user wants to go to the "Pedra Branca" stop, this would check the closest times available at that specific stop within a 3 hour interval:
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/73099341/9ca06b77-3477-4fb0-90d3-a74a0e36f8c0)
+
