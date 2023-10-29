@@ -105,12 +105,24 @@ For proof of implementation take the following COUNTs of the following four tabl
 
 
 The following are the Advanced SQL Queries that we implemented for this project:
-Fare Calculation Query once we have the wanted routes:
-```mysql
 
+Review Pull Query that returns the top 15 routes and the number of each Ratings they got for each starRating from 1 to 5:
+```mysql
+SELECT 
+    r.RouteId,
+    SUM(CASE WHEN rv.starRating = 5 THEN 1 ELSE 0 END) AS FiveStarRatings,
+    SUM(CASE WHEN rv.starRating = 4 THEN 1 ELSE 0 END) AS FourStarRatings,
+    SUM(CASE WHEN rv.starRating = 3 THEN 1 ELSE 0 END) AS ThreeStarRatings,
+    SUM(CASE WHEN rv.starRating = 2 THEN 1 ELSE 0 END) AS TwoStarRatings,
+    SUM(CASE WHEN rv.starRating = 1 THEN 1 ELSE 0 END) AS OneStarRatings
+FROM Routes r
+LEFT JOIN Reviews rv ON r.RouteId = rv.RouteId
+GROUP BY r.RouteId
+LIMIT 15;
 ```
-User Route Query that returns the 3 closest times for the next available stop at Users input location
-```
+
+User Route Query that returns the 3 closest times for the next available stop at the Users input location
+```mysql
 select Routes.*, StopId, n.StopName,TIMEDIFF(STR_TO_DATE(DepartureTime, "%T"), DATE_ADD(CURRENT_TIME, INTERVAL -3 HOUR)) as Time_To_Departure 
     -> from Trips 
     -> left join Routes using (RouteId) 
