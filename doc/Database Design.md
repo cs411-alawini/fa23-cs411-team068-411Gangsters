@@ -121,15 +121,46 @@ GROUP BY r.RouteId
 LIMIT 15;
 ```
 
-User Route Query that returns the 3 closest times for the next available stop at the Users input location
+This query is used to find a List of all Stops and the next closest departure from each Stop on/for a certain Trip based on the StopTimes Table
 ```mysql
-select Routes.*, StopId, n.StopName,TIMEDIFF(STR_TO_DATE(DepartureTime, "%T"), DATE_ADD(CURRENT_TIME, INTERVAL -3 HOUR)) as Time_To_Departure 
-    -> from Trips 
-    -> left join Routes using (RouteId) 
-    -> left join StopTimes using (TripId)
-    -> left join (select StopName, StopId from Stops) n using(StopId)
-    -> where RouteLongName like '%Pedra Branca - %' and STR_TO_DATE(DepartureTime, "%T") > DATE_ADD(CURRENT_TIME, INTERVAL 3 HOUR) limit 3;
+select RouteLongName, StopId, n.StopName,
+CASE
+WHEN MIN(TIMEDIFF(STR_TO_DATE(DepartureTime, "%T"), DATE_ADD(CURRENT_TIME, INTERVAL -3 HOUR))) < 0 THEN 'Next Closest Departure is Tomorrow'
+ELSE TIME_FORMAT(MIN(TIMEDIFF(STR_TO_DATE(DepartureTime, "%T"), DATE_ADD(CURRENT_TIME, INTERVAL -3 HOUR))), '%H hours %i minutes %i seconds')
+END AS Time_To_Departure 
+from Trips 
+left join Routes using (RouteId) 
+left join StopTimes using (TripId) 
+left join (select StopName, StopId from Stops) n using(StopId) 
+where RouteLongName like '%Jd. Fontális - Metrô Santana%'
+group by StopId, n.StopName, RouteLongName
+Order by Time_To_Departure
+Limit 15;
 ```
-Assuming that a user wants to go to the "Pedra Branca" stop, this would check the closest times available at that specific stop within a 3 hour interval:
-![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/73099341/9ca06b77-3477-4fb0-90d3-a74a0e36f8c0)
+
+Running the above query on a route of Jd. Fontális - Metrô Santana returns the following results.
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/51918698/b8aa4df0-2d79-480a-90a3-723307200d2d)
+
+The query can be modified very slightly by adding an additional condition to take into account when a user enters a stop Name. For example when the user enters a particular stop (R. Augusto Rodrigues, 873) we can run this query
+
+```mysql
+select RouteLongName, StopId, n.StopName,
+CASE
+WHEN MIN(TIMEDIFF(STR_TO_DATE(DepartureTime, "%T"), DATE_ADD(CURRENT_TIME, INTERVAL -3 HOUR))) < 0 THEN 'Next Closest Departure is Tomorrow'
+ELSE TIME_FORMAT(MIN(TIMEDIFF(STR_TO_DATE(DepartureTime, "%T"), DATE_ADD(CURRENT_TIME, INTERVAL -3 HOUR))), '%H hours %i minutes %i seconds')
+END AS Time_To_Departure 
+from Trips 
+left join Routes using (RouteId) 
+left join StopTimes using (TripId) 
+left join (select StopName, StopId from Stops) n using(StopId) 
+where RouteLongName like '%Jd. Fontális - Metrô Santana%'
+group by StopId, n.StopName, RouteLongName
+Having n.StopName like '%R. Augusto Rodrigues, 873%'
+Order by Time_To_Departure
+Limit 15;
+```
+
+Running the query using stop R. Augusto Rodrigues, 873 return the following output
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/51918698/59405e08-7052-4018-a76a-01d647d4f0f1)
+
 
