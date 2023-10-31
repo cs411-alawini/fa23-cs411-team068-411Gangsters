@@ -121,6 +121,13 @@ GROUP BY r.RouteId
 LIMIT 15;
 ```
 
+Running the above query will yield the following results:
+
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/73099341/965edfce-18bf-4394-8469-282d61f637b5)
+
+Here we simply organize the number of each rating value per route. By doing so, we can easily get the values for any route and display it onto the screen.
+Values will be updated per any additional input review on that specific route. 
+
 This query is used to find a List of all Stops and the next closest departure from each Stop on/for a certain Trip based on the StopTimes Table
 ```mysql
 select RouteLongName, StopId, n.StopName,
