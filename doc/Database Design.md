@@ -182,23 +182,38 @@ Indexing:
 
 For the first advanced query, below is the output on running EXPLAIN ANALYZE.
 
-![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/ba0ff040-b69d-4d30-9a0f-e9056f092fdc)
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/699ea56f-c1af-4c87-8d57-6c3fc7a82000)
 
-For the first advanced query, we created an index on Routes.RouteId because it was in the GROUP BY clause. 
-This reduced the time taken to run the query by 0.01 seconds. Below is the output on running EXPLAIN ANALYZE after creating the index.
+Below are indexing designs we tried for first advanced query:
 
-![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/d5f28bf3-16ac-4478-84f2-1b84d5dad54f)
+1. Created index on Reviews.starRating because it was in the CASE WHEN clause. This reduced time taken by 0.01 seconds.
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/762a77c3-9e2f-4aa0-b1d4-3c1ea83cbafd)
+
+
+
+We don’t need to create an index on Routes.RouteId because it is a primary key and MySQL appears to automatically create an index for it.
 
 
 For the second advanced query, below is the output on running EXPLAIN ANALYZE.
 
 ![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/85e8d766-5edc-480d-bd82-83f4daea0a86)
 
-For the second advanced query, we created indices on Routes.RouteLongName and Stops.StopName since they are present in the WHERE and GROUP BY clauses. We didn’t need to create an index for StopTimes.StopId, which is also in the GROUP BY clause, because it is a foreign key and MySQL appears to automatically create an index for it. This reduced the time taken to run the query by 0.02 seconds. Below is the output on running EXPLAIN ANALYZE after creating the indices.
- 
+Below are the indexing designs we tried for the second advanced query:
 
-![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/7136251b-4056-4c9d-9726-c4ba01898fe6)
+1. Created index on Stops.StopName because it is present in the GROUP BY clause. This reduced time taken by 0.02 seconds.
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/588c800a-66d9-44b3-904b-287f5ee87d1a)
 
+
+2. Created index on Routes.RouteLongName because it is present in the WHERE and GROUP BY clauses. This reduced time taken by 0.02 seconds.
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/0090160e-a702-44e9-ad40-8c1f7c289009)
+
+3. Created index on both Routes.RouteLongName and Stops.StopName since since they are present in the WHERE and GROUP BY clauses. This reduced time taken by 0.02 seconds.
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/b4e39847-02b6-405f-ad76-9cba4668b778)
+
+
+We didn’t need to create an index for StopTimes.StopId because it is a foreign key and MySQL appears to automatically create an index for it.
+
+As we can see, the indexing analysis for the second advanced query shows that all three indexing design yield similar results in terms of the time taken for execution. This is probably because making either one of Routes.RouteLongName or Stops.StopName an index is enough for the query to run efficiently. The rest of the time contribution is probably due to other parts of the query. Since we can choose any of these three indexing designs due to their similar effects execution time, we randomly choose the third design.
 
 
 
