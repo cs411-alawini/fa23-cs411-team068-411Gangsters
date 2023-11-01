@@ -201,7 +201,7 @@ Below are indexing designs we tried for first advanced query:
 
 We don’t need to create an index on `Routes.RouteId` because it is a primary key and MySQL appears to automatically create an index for it.
 
-<b>NOTE: We only have one attribute on which we can create an index, which we did not already have, and therefore, we have only one indexing design for this query that we have to choose from and that will be the one we will use. </b>
+<b>NOTE: We only have one attribute on which we can create an index, which did not already exist, and therefore, we have only one indexing design for this query that we have to choose from and that will be the one we will use. </b>
 
 
 ## Second Query
