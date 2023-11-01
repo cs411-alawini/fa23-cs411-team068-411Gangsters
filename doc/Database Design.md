@@ -177,6 +177,7 @@ Running the query using stop R. Augusto Rodrigues, 873 return the following outp
 ![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/51918698/59405e08-7052-4018-a76a-01d647d4f0f1)
 
 
+
 Indexing:
 
 For the first advanced query, below is the output on running EXPLAIN ANALYZE.
@@ -186,7 +187,8 @@ For the first advanced query, below is the output on running EXPLAIN ANALYZE.
 For the first advanced query, we created an index on Routes.RouteId because it was in the GROUP BY clause. 
 This reduced the time taken to run the query by 0.01 seconds. Below is the output on running EXPLAIN ANALYZE after creating the index.
 
-![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/14391c40-fc5c-4569-9ccd-331471e4be0e)
+![image](https://github.com/cs411-alawini/fa23-cs411-team068-411Gangsters/assets/34684132/d5f28bf3-16ac-4478-84f2-1b84d5dad54f)
+
 
 For the second advanced query, below is the output on running EXPLAIN ANALYZE.
 
