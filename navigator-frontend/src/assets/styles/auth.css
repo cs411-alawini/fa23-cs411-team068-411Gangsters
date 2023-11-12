@@ -1,0 +1,61 @@
+.auth-form-container, .login-form, .register-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0.83rem 0;
+  }
+  
+  .logo {
+    width: 40%;
+    height: auto;
+    margin-bottom: 0px;
+  }
+  
+  .auth-form-container {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  
+  label {
+    text-align: left;
+    padding: 0.25rem 0;
+    margin-left: 1rem;
+    font-weight: bold;
+  }
+  
+  input {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    width: 250px;
+  }
+  
+  button {
+    border: none;
+    margin: 0.5rem;
+    width: 280px;
+    background-color: rgb(251, 252, 252);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .link-btn {
+    background: none;
+    color: rgb(234, 234, 242);
+    text-decoration: underline;
+    font-size: 0.9rem;
+  }
+  
+  .label-holder {
+    width: 100%;
+    text-align: left;
+  }
+  
+  button[type="submit"] {
+    font-size: medium;
+    font-weight: 600;
+  }
