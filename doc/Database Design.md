@@ -88,6 +88,7 @@ CREATE TABLE FareRules(  RouteId VARCHAR(10),
 	OriginId VARCHAR(255),
 	DestinationId VARCHAR(255),
 	ContainsId VARCHAR(255),
+  PRIMARY KEY(RouteId, FareId);
   FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE,
   FOREIGN KEY(FareId) REFERENCES FareAttributes(FareId) ON DELETE CASCADE
 
@@ -98,6 +99,7 @@ CREATE TABLE Reviews (
 	UserId INT,
 	Comments VARCHAR(1000),
 	starRating INT,
+  PRIMARY KEY(RouteId, UserId);
   FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE,
   FOREIGN KEY(UserId) REFERENCES Users(UserId) ON DELETE CASCADE
 );
