@@ -21,7 +21,7 @@ CREATE TABLE Routes(
 	RouteType INT,
 	RouteColor VARCHAR(6),
 	RouteTextColor VARCHAR(6),
-  PRIMARY KEY(RouteId)
+        PRIMARY KEY(RouteId)
 );
 
 CREATE TABLE Trips(
@@ -31,8 +31,8 @@ CREATE TABLE Trips(
 	TripHeadsign VARCHAR(255),
 	DirectionId INT,
 	ShapeId INT,
-  PRIMARY KEY(TripId, ShapeId),
-  FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE 
+        PRIMARY KEY(TripId, ShapeId),
+        FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE 
 );
 
 CREATE TABLE Calendar( ServiceId VARCHAR(3), Monday INT, Tuesday INT,  Wednesday INT, Thursday INT, Friday INT, Saturday INT, Sunday INT, StartDate VARCHAR(10), EndDate VARCHAR(10), PRIMARY KEY(ServiceId));
@@ -43,7 +43,7 @@ CREATE TABLE Shapes(
 	ShapePtLon REAL, 
 	ShapePtSequence INT, 
 	ShapeDistTraveled REAL,
-  PRIMARY KEY(ShapeId, ShapePtSequence)
+        PRIMARY KEY(ShapeId, ShapePtSequence)
 );
 
 CREATE TABLE Frequencies (
@@ -52,8 +52,8 @@ CREATE TABLE Frequencies (
 	StartTime VARCHAR(8),
 	EndTime VARCHAR(8),
 	HeadwaySecs INT,
-  PRIMARY KEY(FrequencyId),
-  FOREIGN KEY (TripId) REFERENCES Trips(TripId) ON DELETE CASCADE
+        PRIMARY KEY(FrequencyId),
+        FOREIGN KEY (TripId) REFERENCES Trips(TripId) ON DELETE CASCADE
 );
 
 CREATE TABLE Stops ( StopId INT,
@@ -69,8 +69,9 @@ CREATE TABLE StopTimes (StopId INT,
 	ArrivalTime VARCHAR(8),
 	DepartureTime VARCHAR(8),
 	StopSequence INT,
-  FOREIGN KEY (StopId) REFERENCES Stops(StopId) ON DELETE CASCADE,
-  FOREIGN KEY (TripId) REFERENCES Trips(TripId) ON DELETE CASCADE
+       PRIMARY KEY(TripId, StopSequence);
+       FOREIGN KEY (StopId) REFERENCES Stops(StopId) ON DELETE CASCADE,
+       FOREIGN KEY (TripId) REFERENCES Trips(TripId) ON DELETE CASCADE
 );
 
 CREATE TABLE FareAttributes(
@@ -80,7 +81,7 @@ CREATE TABLE FareAttributes(
 	PaymentMethod INT,
 	Transfers VARCHAR(255),
 	TransferDuration INT,
-  PRIMARY KEY(FareId)
+        PRIMARY KEY(FareId)
 );
 
 CREATE TABLE FareRules(  RouteId VARCHAR(10), 
@@ -88,9 +89,9 @@ CREATE TABLE FareRules(  RouteId VARCHAR(10),
 	OriginId VARCHAR(255),
 	DestinationId VARCHAR(255),
 	ContainsId VARCHAR(255),
-  PRIMARY KEY(RouteId, FareId);
-  FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE,
-  FOREIGN KEY(FareId) REFERENCES FareAttributes(FareId) ON DELETE CASCADE
+        PRIMARY KEY(RouteId, FareId);
+        FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE,
+        FOREIGN KEY(FareId) REFERENCES FareAttributes(FareId) ON DELETE CASCADE
 
 );
 
@@ -99,9 +100,9 @@ CREATE TABLE Reviews (
 	UserId INT,
 	Comments VARCHAR(1000),
 	starRating INT,
-  PRIMARY KEY(RouteId, UserId);
-  FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE,
-  FOREIGN KEY(UserId) REFERENCES Users(UserId) ON DELETE CASCADE
+        PRIMARY KEY(RouteId, UserId);
+        FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE,
+        FOREIGN KEY(UserId) REFERENCES Users(UserId) ON DELETE CASCADE
 );
 
 ```
