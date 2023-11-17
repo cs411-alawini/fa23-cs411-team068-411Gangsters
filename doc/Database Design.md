@@ -2,6 +2,8 @@
 
 ## Database DDL Commands
 
+This database is heavily based off of the General Transit Specification Data format: https://gtfs.org/schedule/examples/routes-stops-trips/
+
 ```MySQL
 CREATE database navigator;
 
