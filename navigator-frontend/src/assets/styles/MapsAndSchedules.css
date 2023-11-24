@@ -1,0 +1,81 @@
+.container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    color: black;
+    overflow-y: auto;
+}
+.header {
+    z-index: 1;
+    position: fixed;
+    background: white;
+    width: 100%;
+    vertical-align: top;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: 0px 1px 33px -4px rgba(0,0,0,0.67);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    color: rgba(35, 86, 142);
+    font-weight: 700;
+}
+
+.header > img {
+    margin-right: 2rem;
+}
+
+.header-link {
+    margin: 0 2rem;
+    font-size: 1.3rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    padding: 5rem;
+    margin-top: 9rem;
+}
+
+.left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.right {
+    width: 50%;
+}
+
+.user-input-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 1fr;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.user-input-container > div {
+    text-align: left;
+}
+
+.select-route, .select-stop {
+    font-family: Exo, sans-serif;
+    font-size: 1rem;
+    margin: 1rem 1rem;
+}
+
+.routes_display > table ,  th, td{
+    width: 100%;
+    border: 1px solid black;
+}
+
+.retrieved-at {
+    text-align: left;
+    margin: 1rem auto;
+    font-weight: bold;
+    min-height: 1.5rem;
+}

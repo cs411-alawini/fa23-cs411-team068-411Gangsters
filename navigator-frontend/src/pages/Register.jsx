@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import axios from "axios"
 import '../assets/styles/auth.css';
+import logo from '../assets/images/logo.png'
 
 // Two default xsrf token headers for axios. 
 // These headers are used to protect against CSRF (Cross-Site Request Forgery) attacks.
@@ -30,7 +31,7 @@ export const Register = ({ onFormSwitch }) => {
 
     return (
         <div className="auth-form-container">
-            <h1>Navigator</h1>
+            <img src={logo} alt="logo" />
             <h2>Register</h2>
             <form className="register-form" onSubmit={handleSubmit}>
                 <div className="label-holder">  
@@ -45,7 +46,7 @@ export const Register = ({ onFormSwitch }) => {
                     <label htmlFor="password">Password</label>
                 </div>
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="*********" id="password" name="password" style={{"marginBottom": "1rem"}} />
-                <button type="submit">Register</button>
+                <button type="submit">REGISTER</button>
             </form>
             <button className="link-btn" onClick={() => onFormSwitch('login')}>Already have an account? Login here.</button>
         </div>

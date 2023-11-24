@@ -7,10 +7,10 @@
   color: white;
 }
 
-.App-unauth {
-    background-image: linear-gradient(79deg, #780206, #FF003C);
-  }
+.App-auth {
+  background: white;
+}
   
-  .App-auth {
-    background-image: linear-gradient(79deg, #058d62, #027859);
-  }
+.App-unauth {
+  background-image: linear-gradient(180deg, rgba(35, 86, 142), rgb(4, 50, 99));
+}

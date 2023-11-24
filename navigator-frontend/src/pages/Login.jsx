@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import '../assets/styles/auth.css';
+import logo from '../assets/images/logo.png'
 
 // Two default xsrf token headers for axios. 
 // These headers are used to protect against CSRF (Cross-Site Request Forgery) attacks.
@@ -19,7 +20,7 @@ export const Login = ({ onFormSwitch }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await axios.post("http://127.0.0.1:8000/api/auth/login", {
+        const response = await axios.post("http://127.0.0.1:8000/auth/login", {
             username: username,
             password: password
         })
@@ -28,7 +29,7 @@ export const Login = ({ onFormSwitch }) => {
 
     return (
         <div className="auth-form-container">
-            <h1>Navigator</h1>
+            <img src={logo} alt="logo" />
             <h2>Login</h2>
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="label-holder">

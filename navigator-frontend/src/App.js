@@ -9,15 +9,15 @@ import "./assets/styles/App.css";
 function App() {
 
   // State to hold current page (Login/Register)
-  const [currentForm, setCurrentForm] = useState('login');
-  const [authenticated, setAuthenticated] = useState(false);
+  const [currentForm, setCurrentForm] = useState('mapsAndSchedules');
+  const [authenticated, setAuthenticated] = useState(true);
 
   const toggleForm = (formName) => {
     setCurrentForm(formName);
     if (formName === 'login' || formName === 'register') {
-      setAuthenticated(true);
-    } else {
       setAuthenticated(false);
+    } else {
+      setAuthenticated(true);
     }
   }
 

@@ -10,7 +10,7 @@ CREATE database navigator;
 USE navigator;
 
 CREATE TABLE Users(
-	UserId INT,  
+	UserId INT AUTO_INCREMENT,  
 	UserName VARCHAR(100), 
 	Password VARCHAR(255),
 	PRIMARY KEY(UserId)
