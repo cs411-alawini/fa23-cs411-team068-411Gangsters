@@ -7,9 +7,15 @@ from dotenv import load_dotenv
 
 from flask import Flask
 from flask_cors import CORS
-from flask import request
+from flask import request, session
+from flask_session import Session
+
 
 app = Flask(__name__)
+load_dotenv()
+app.secret_key = os.getenv("APP_SECRET_KEY")
+
+
 CORS(app)
 
 def connect_with_connector() -> sqlalchemy.engine.base.Engine:
@@ -19,12 +25,14 @@ def connect_with_connector() -> sqlalchemy.engine.base.Engine:
     Uses the Cloud SQL Python Connector package.
     """
 
-    load_dotenv()
+
 
     instance_connection_name = os.getenv("INSTANCE_CONNECTION_NAME")  # e.g. 'project:region:instance'
     db_user = os.getenv("DB_USER")  # e.g. 'my-db-user'
     db_pass = os.getenv("DB_PASS")  # e.g. 'my-db-password'
     db_name = os.getenv("DB_NAME")  # e.g. 'my-database'
+
+
 
     ip_type = IPTypes.PUBLIC
 
@@ -126,3 +134,54 @@ Limit 15;"""),
             ans.append(tuple(row))
     pool.dispose()
     return json.dumps(ans)
+
+
+
+
+@app.route('/register', methods =['POST'])
+def register():
+    
+    return "not implemented", 500
+
+@app.route('/login', methods =['POST'])
+def login() :
+    pool = connect_with_connector()
+    # with pool.connect() as db:
+    #     statement=sqlalchemy.text("SELECT StopName FROM Stops WHERE StopName LIKE :stop_name")
+    #     db.execute()
+    with pool.connect() as db_conn:
+        username = request.args.get('username')
+        password = request.args.get('password')
+        row = db_conn.execute(
+            statement=sqlalchemy.text("SELECT UserId, UserName FROM Users WHERE UserName = :username AND Password = :password"), 
+            parameters=dict(username=f"{username}", password = f"{password}")
+        ).fetchone()
+        print(row)
+        if row != None:
+            # print(" Here now ")
+            session['user_id'] = row[0]
+            session['user_name'] = row[1]
+            # print(" Login Successful ")
+            pool.dispose()
+            return "Login Successful", 200
+        else:
+            print(" Not Registered, please register using the link below ")
+            pool.dispose()
+            return "Not Registered, please register using the link below", 200
+
+
+
+
+@app.route("/logout", methods=["POST"])
+def logout_user():
+    if 'user_id' in session and 'user_name' in session:
+        session.pop("user_id")
+        session.pop("user_name")
+    return "logout successful", 200
+
+@app.route("/get_curr_user", methods=["POST"])
+def get_curr_user():
+    if 'user_id' in session and 'user_name' in session:
+        return (session.get('user_id'), session.get('user_name')), 200
+    return "No user logged in ", 200
+

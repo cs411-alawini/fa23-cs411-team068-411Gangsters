@@ -14,18 +14,27 @@ export const Login = ({ onFormSwitch }) => {
     const [username, setUser] = useState('');
     const [password, setPassword] = useState('');
 
+
+
     // This function is triggered when the user submits the login form. 
     // This function prevents the default behavior of the form,sends a POST request to the URL "http://127.0.0.1:5000/api/auth/"
     // login, and logs the response to the console. The request includes the values of the "username" and "password" states.
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await axios.post("http://127.0.0.1:8000/auth/login", {
-            username: username,
-            password: password
-        })
+        const response = await axios({
+            method: 'post',
+            url: 'http://127.0.0.1:5000/login',
+            params: {
+                username: username,
+                password: password
+            }
+          })
         console.log(response)
     }
+
+
+
 
     return (
         <div className="auth-form-container">
