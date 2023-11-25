@@ -10,7 +10,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 // The Login page component
 // The onFormSwitch prop is the function used to switch between the login and register pages
-export const Login = ({ onFormSwitch }) => {
+export const Login = ({ pageSwitch }) => {
     const [username, setUser] = useState('');
     const [password, setPassword] = useState('');
 
@@ -51,7 +51,7 @@ export const Login = ({ onFormSwitch }) => {
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="*********" id="password" name="password" style={{"marginBottom": "1rem"}} />
                 <button type="submit">LOGIN</button>
             </form>
-            <button className="link-btn" onClick={() => onFormSwitch('register')}>Don't have an account? Register Here.</button>
+            <button className="link-btn" onClick={() => pageSwitch('register')}>Don't have an account? Register Here.</button>
         </div>
     )
 }

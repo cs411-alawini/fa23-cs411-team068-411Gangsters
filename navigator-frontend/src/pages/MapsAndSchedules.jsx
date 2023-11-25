@@ -1,10 +1,10 @@
 import '../assets/styles/MapsAndSchedules.css';
-import logo from '../assets/images/logo.png'
-import React, {useEffect, useState} from 'react';
+import { Header } from '../elements/Header';
+import React, { useEffect, useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import axios from 'axios';
 
-export const MapsAndSchedules = () => {
+export const MapsAndSchedules = ({ pageSwitch }) => {
     const [selectedRoute, setSelectedRoute] = useState([]);
     const [selectedStop, setSelectedStop] = useState([]);
     const [routesDisplayData, setRoutesDisplayData] = useState([]);
@@ -33,7 +33,12 @@ export const MapsAndSchedules = () => {
 
     const handleStopInputChange = (inputValue) => new Promise(resolve => resolve(filterStops(inputValue)));
 
-
+    const logoutHandler = async () => {
+        return await axios.post("http://127.0.0.1:5000/logout").then((res) => {
+            pageSwitch("login");
+            alert(res.data);
+        });
+    };
 
     useEffect(() => {
         const getNearestDepartureTime = async (route, stop="") => {
@@ -60,15 +65,7 @@ export const MapsAndSchedules = () => {
 
     return (
         <div className="container">
-            <div className="header">
-                <img src={logo} width={84} alt="logo" />
-                <div className="header-link">
-                    Maps and Schedules
-                </div>
-                <div className="header-link">
-                    Route Rating
-                </div>
-            </div>
+            <Header logoutHandler={logoutHandler} />
             <div className="content">
                 <div className="left">
                     <div className="user-input-container">

@@ -1,0 +1,31 @@
+.header {
+    z-index: 1;
+    position: fixed;
+    box-sizing: border-box;
+    background: white;
+    width: 100%;
+    vertical-align: top;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: 0px 1px 33px -4px rgba(0,0,0,0.67);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    color: rgba(35, 86, 142);
+    font-weight: 700;
+}
+
+.header > img {
+    margin-right: 2rem;
+}
+
+.header-link {
+    margin: 0 2rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.logout {
+    margin-left: auto;
+}

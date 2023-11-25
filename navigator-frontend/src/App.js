@@ -9,8 +9,8 @@ import "./assets/styles/App.css";
 function App() {
 
   // State to hold current page (Login/Register)
-  const [currentForm, setCurrentForm] = useState('login');
-  const [authenticated, setAuthenticated] = useState(false);
+  const [currentForm, setCurrentForm] = useState('mapsAndSchedules');
+  const [authenticated, setAuthenticated] = useState(true);
 
   const toggleForm = (formName) => {
     setCurrentForm(formName);
@@ -26,13 +26,13 @@ function App() {
       {
       (() => {
         if (currentForm === "login") {
-          return <Login onFormSwitch={toggleForm} />;
+          return <Login pageSwitch={toggleForm} />;
         } else if (currentForm === "register") {
-          return <Register onFormSwitch={toggleForm} />;
+          return <Register pageSwitch={toggleForm} />;
         } else if (currentForm === "mapsAndSchedules") {
-          return <MapsAndSchedules onFormSwitch={toggleForm}/>;
+          return <MapsAndSchedules pageSwitch={toggleForm}/>;
         } else if (currentForm === "rating") {
-          return <Rating onFormSwitch={toggleForm} />;
+          return <Rating pageSwitch={toggleForm} />;
         }
       })()
       }

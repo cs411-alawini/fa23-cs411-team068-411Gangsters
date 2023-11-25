@@ -177,7 +177,7 @@ def logout_user():
     if 'user_id' in session and 'user_name' in session:
         session.pop("user_id")
         session.pop("user_name")
-    return "logout successful", 200
+    return "Logout successful", 200
 
 @app.route("/get_curr_user", methods=["POST"])
 def get_curr_user():
