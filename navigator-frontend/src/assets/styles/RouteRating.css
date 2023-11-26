@@ -1,0 +1,105 @@
+.route-rating-container {
+    min-height: 100vh;
+    min-width: 100%;
+    display: inline-block;
+    color: black;
+    padding: 0px !important;
+}
+
+.route-rating-container .content {
+    display: flex;
+    flex-direction: column;
+    padding: 5rem;
+    margin-top: 18vh;
+    overflow-y: scroll;
+    min-height: calc(75vh - 45px);
+    max-height: 0;   
+}
+
+.route-rating-container .user-input-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin-bottom: 2rem;
+    align-items: center;
+    width: 50%;
+}
+
+.route-rating-container .user-input-container div {
+    text-align: left;
+}
+
+.route-rating-container .select-route {
+    font-family: Exo, sans-serif;
+    font-size: 1rem;
+    margin: 1rem 1rem;
+}
+
+.route-rating-container .selected-route-details {
+    text-align: left;
+}
+
+.route-rating-container h4 {
+    font-weight: bold;
+}
+
+.route-rating-container .ratings {
+    display: grid;
+    width: 50%;
+    font-size: 1.5rem;
+    align-items: center;
+    grid-template-columns: 1fr 9fr;
+}
+
+.route-rating-container .total-reviews {
+    text-align: left;
+    padding: 0 1rem;
+    font-size: 1.3rem;
+}
+
+.route-rating-container hr {
+    height: 1px;
+    width: 100%;
+    margin: 2rem auto;
+    background-color: black;
+}
+
+.route-rating-container form {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-bottom: 3rem;
+}
+
+.route-rating-container button[type="submit"] {
+    background-color: rgba(35, 86, 142);
+    
+    color: white;
+    margin: 1rem 0;
+}
+
+.route-rating-container button[type="submit"]:hover {
+    background-color: rgba(35, 86, 142, 0.8);
+}
+
+.route-rating-container button[type="submit"]:disabled {
+    background-color: rgba(35, 86, 142, 0.5);
+    cursor: auto;
+}
+
+.route-rating-container textarea {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border-radius: 10px;
+    max-width: 700px;
+    max-height: 400px;
+    height: 7rem;
+    resize: none;
+    width: 100%;
+    font-family: "Exo", sans-serif;
+    border: 1px solid black;
+}
+
+.route-rating-container .note {
+    font-weight: bold;
+    text-align: left;
+}

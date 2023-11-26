@@ -2,16 +2,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  display: flex;
   flex-direction: column;
-  margin: 0.83rem 0;
+  margin: 0.83rem;
 }
 
 .auth-form-container {
   padding: 1rem;
   margin: 0.5rem;
 }
-.auth-form-container > img {
+.auth-form-container img {
   width: 90px;
 }
 

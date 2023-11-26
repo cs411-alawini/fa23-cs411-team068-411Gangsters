@@ -1,0 +1,25 @@
+.review {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+.review div {
+    text-align: left;
+}
+
+.review .username {
+    font-weight: bold;
+}
+
+.review button {
+    background-color: rgba(220, 103, 108);
+    max-width: 120px;
+    color: white;
+    margin: 1rem 0;
+    
+}
+
+.review button:hover {
+    background-color: rgba(220, 103, 108, 0.5);
+}

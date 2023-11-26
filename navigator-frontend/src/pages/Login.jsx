@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import '../assets/styles/auth.css';
 import logo from '../assets/images/logo.png'
+import { useNavigate } from "react-router-dom";
 
 // Two default xsrf token headers for axios. 
 // These headers are used to protect against CSRF (Cross-Site Request Forgery) attacks.
@@ -14,7 +15,7 @@ export const Login = ({ pageSwitch }) => {
     const [username, setUser] = useState('');
     const [password, setPassword] = useState('');
 
-
+    const navigate = useNavigate();
 
     // This function is triggered when the user submits the login form. 
     // This function prevents the default behavior of the form,sends a POST request to the URL "http://127.0.0.1:5000/api/auth/"
@@ -32,9 +33,10 @@ export const Login = ({ pageSwitch }) => {
           })
         console.log(response)
     }
-
-
-
+    
+    useEffect(() => {
+        document.getElementsByClassName('App')[0].className = "App App-unauth"
+    }, []);
 
     return (
         <div className="auth-form-container">
@@ -51,7 +53,7 @@ export const Login = ({ pageSwitch }) => {
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="*********" id="password" name="password" style={{"marginBottom": "1rem"}} />
                 <button type="submit">LOGIN</button>
             </form>
-            <button className="link-btn" onClick={() => pageSwitch('register')}>Don't have an account? Register Here.</button>
+            <button className="link-btn" onClick={() => navigate("/register")}>Don't have an account? Register Here.</button>
         </div>
     )
 }

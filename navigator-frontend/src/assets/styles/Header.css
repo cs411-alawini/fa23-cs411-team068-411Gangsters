@@ -1,5 +1,5 @@
 .header {
-    z-index: 1;
+    z-index: 1000;
     position: fixed;
     box-sizing: border-box;
     background: white;
@@ -14,9 +14,10 @@
     border-bottom-right-radius: 15px;
     color: rgba(35, 86, 142);
     font-weight: 700;
+    min-height: 18vh;
 }
 
-.header > img {
+.header img {
     margin-right: 2rem;
 }
 
@@ -24,6 +25,16 @@
     margin: 0 2rem;
     font-size: 1.3rem;
     cursor: pointer;
+}
+
+.header-link a {
+    color: rgba(35, 86, 142) !important;
+    text-decoration: none;
+
+}
+
+.underline {
+    text-decoration: underline;
 }
 
 .logout {

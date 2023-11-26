@@ -3,8 +3,14 @@ import React, { useState } from 'react';
 import { Login } from './pages/Login';
 import { MapsAndSchedules } from './pages/MapsAndSchedules';
 import { Register } from './pages/Register';
-import { Rating } from './pages/Rating';
+import { RouteRating } from './pages/RouteRating';
 import "./assets/styles/App.css";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
 
@@ -22,21 +28,15 @@ function App() {
   }
 
   return (
-    <div className={ authenticated ? "App-auth App" : "App-unauth App" }>
-      {
-      (() => {
-        if (currentForm === "login") {
-          return <Login pageSwitch={toggleForm} />;
-        } else if (currentForm === "register") {
-          return <Register pageSwitch={toggleForm} />;
-        } else if (currentForm === "mapsAndSchedules") {
-          return <MapsAndSchedules pageSwitch={toggleForm}/>;
-        } else if (currentForm === "rating") {
-          return <Rating pageSwitch={toggleForm} />;
-        }
-      })()
-      }
-        
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/mapsAndSchedules" element={<MapsAndSchedules />} />
+          <Route path="/routeRating" element={<RouteRating />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
