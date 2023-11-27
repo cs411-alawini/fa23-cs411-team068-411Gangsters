@@ -22,7 +22,7 @@ export const MapsAndSchedules = () => {
             {
                 label: 'Stop Name',
                 renderCell: (item) => item.stopName
-              },
+            },
             {
               label: 'Time until Departure',
               renderCell: (item) => item.timeUntilDeparture
@@ -147,7 +147,7 @@ export const MapsAndSchedules = () => {
                 </div>
                 <div className="right">
                     <div className="leaflet-container">
-                        <MapContainer center={[48.8566, 2.3522]} zoom={13}>
+                        <MapContainer center={[-23.533773, -46.625290]} zoom={13}>
                             <TileLayer
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             />
