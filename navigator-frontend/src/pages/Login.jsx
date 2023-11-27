@@ -14,6 +14,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 export const Login = ({ pageSwitch }) => {
     const [username, setUser] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -22,16 +23,20 @@ export const Login = ({ pageSwitch }) => {
     // login, and logs the response to the console. The request includes the values of the "username" and "password" states.
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const response = await axios({
-            method: 'post',
-            url: 'http://127.0.0.1:5000/login',
-            params: {
-                username: username,
-                password: password
-            }
-          })
-        console.log(response)
+        try {
+            const response = await axios({
+                method: 'post',
+                url: 'http://127.0.0.1:2000/login',
+                params: {
+                    username: username,
+                    password: password
+                }
+              })
+              navigate("/mapsAndSchedules");
+              console.log(response.status);
+        } catch (e) {
+            setErrorMessage("Please re-enter your credentials or check that you are registered");
+        }
     }
     
     useEffect(() => {
@@ -54,6 +59,7 @@ export const Login = ({ pageSwitch }) => {
                 <button type="submit">LOGIN</button>
             </form>
             <button className="link-btn" onClick={() => navigate("/register")}>Don't have an account? Register Here.</button>
+            {errorMessage && ( <p className="error"> <div style={{ color: 'red' }}> {errorMessage}</div> </p>)}
         </div>
     )
 }

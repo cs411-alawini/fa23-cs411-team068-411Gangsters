@@ -15,6 +15,7 @@ export const Register = ({ pageSwitch }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -23,13 +24,21 @@ export const Register = ({ pageSwitch }) => {
     // http://127.0.0.1:5000/api/auth/register
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const response = await axios.post("http://127.0.0.1:8000/api/auth/register", {
-            email: email,
-            username: username,
-            password: password
-        })
-        console.log(response)
+        const response = await axios({
+            method: 'post',
+            url: 'http://127.0.0.1:2000/register',
+            params: {
+                username: username,
+                password: password
+            }
+          })
+          if (response.status === 200) {
+            navigate('/login');
+          } else if (response.status === 201) {
+            setErrorMessage("You are already registered, please head to login page");
+          } else if (response.status === 202) {
+            setErrorMessage("Your username contains inappropriate words");
+          }
     }
 
     useEffect(() => {
@@ -54,8 +63,10 @@ export const Register = ({ pageSwitch }) => {
                 </div>
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="*********" id="password" name="password" style={{"marginBottom": "1rem"}} />
                 <button type="submit">REGISTER</button>
+
             </form>
             <button className="link-btn" onClick={() => navigate('/login')}>Already have an account? Login here.</button>
+            {errorMessage && ( <p className="error"> <div style={{ color: 'red' }}> {errorMessage}</div> </p>)}
         </div>
     )
 }

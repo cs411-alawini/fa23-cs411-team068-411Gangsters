@@ -224,8 +224,33 @@ WHERE RouteId = :route_id AND UserId = :user_id;"""),
 
 @app.route('/register', methods =['POST'])
 def register():
+    pool = connect_with_connector()
+    with pool.connect() as db_conn:
+        username = request.args.get('username')
+        password = request.args.get('password')
+
+        row = db_conn.execute(
+            statement=sqlalchemy.text("SELECT UserId, UserName FROM Users WHERE UserName = :username AND Password = :password"), 
+            parameters=dict(username=f"{username}", password = f"{password}")
+        ).fetchone()
+        if row == None:
+            current_user_count = db_conn.execute(
+                statement=sqlalchemy.text("SELECT UserId FROM Users ORDER BY UserId DESC LIMIT 1")).fetchone()
+            try :
+                r = db_conn.execute(
+                    statement=sqlalchemy.text("INSERT INTO Users VALUES(:userid, :username, :password)"), 
+                    parameters=dict(userid = f"{current_user_count[0] + 1}", username=f"{username}", password=f"{password}")
+                )
+                db_conn.commit()
+                return "You are now registered, please head to the login page", 200
+            except Exception as e:
+                print(e)
+                print("Your username contains inappropriate words")
+                return "Your username contains inappropriate words", 202
+
+        else :
+            return "You are already registered ", 201
     
-    return "not implemented", 500
 
 @app.route('/login', methods =['POST'])
 def login() :
@@ -244,11 +269,12 @@ def login() :
             session['user_name'] = row[1]
             # print(" Login Successful ")
             pool.dispose()
+            print("login successful")
             return "Login Successful", 200
         else:
             print(" Not Registered, please register using the link below ")
             pool.dispose()
-            return "Not Registered, please register using the link below", 200
+            return "Not Registered, please register using the link below", 401
 
 @app.route("/logout", methods=["POST"])
 def logout_user():
