@@ -1,6 +1,7 @@
 .data-table {
     min-height: calc(35vh + 5rem) !important;
     max-height: calc(45vh - 20rem) !important;
+    z-index: 0;
 }
 
 .data-table table th {
