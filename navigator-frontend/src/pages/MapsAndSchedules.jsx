@@ -6,6 +6,15 @@ import 'leaflet/dist/leaflet.css';
 import {MapContainer , TileLayer, Marker, Popup} from 'react-leaflet';
 import '../assets/styles/MapsAndSchedules.css';
 import { CustomTable } from '../elements/CustomTable';
+import L from 'leaflet';
+
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+});
 
 
 export const MapsAndSchedules = () => {
@@ -149,6 +158,7 @@ export const MapsAndSchedules = () => {
                     <div className="leaflet-container">
                         <MapContainer center={[-23.533773, -46.625290]} zoom={13}>
                             <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             />
                             {/* <Marker position={[48.8566, 2.3522]}>
@@ -156,6 +166,11 @@ export const MapsAndSchedules = () => {
                                     A pretty CSS3 popup. <br /> Easily customizable.
                                 </Popup>
                             </Marker> */}
+                            <Marker position={[-23.533773, -46.625290]}>
+                                <Popup>
+                                    Sau Paulo. <br /> Add only when selecting a stop_name.
+                                </Popup>
+                            </Marker>
                         </MapContainer>
                     </div>
                 </div>
