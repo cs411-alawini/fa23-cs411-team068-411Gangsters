@@ -14,8 +14,6 @@ axios.defaults.xsrfCookieName = "csrftoken";
 export const Login = () => {
     const [username, setUser] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -63,8 +61,6 @@ export const Login = () => {
                 <button type="submit">LOGIN</button>
             </form>
             <button className="link-btn" onClick={() => navigate("/register")}>Don't have an account? Register Here.</button>
-            {errorMessage && ( <p className="error"> <div style={{ color: 'red' }}> {errorMessage}</div> </p>)}
-            {errorMessage && ( <p className="error"> <div style={{ color: 'red' }}> {errorMessage}</div> </p>)}
         </div>
     )
 }
