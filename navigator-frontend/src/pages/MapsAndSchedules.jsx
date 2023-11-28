@@ -38,12 +38,43 @@ export const MapsAndSchedules = () => {
               renderCell: (item) => item.timeUntilDeparture
             }
           ],
-          rows: []
+          rows: [],
+    };
+    let coordinates = {
+        columns : [
+            {
+                label:'Latitude',
+                renderCell: (item) => item.latitude
+            },
+            {
+                label : 'Longitude',
+                renderCell: (item) => item.longitude
+            },
+            {
+                label : 'StopName',
+                renderCell: (item) => item.name
+            }
+
+
+        ],
+        rows : [],
+        center : []
     };
 
     const [routesDisplayData, setRoutesDisplayData] = useState(data);
     const [selectedRoute, setSelectedRoute] = useState({});
     const [selectedStop, setSelectedStop] = useState({});
+    const [mapDisplayData, setMapData] = useState({
+        columns: [
+          { label: 'Latitude', renderCell: (item) => item.latitude },
+          { label: 'Longitude', renderCell: (item) => item.longitude },
+          { label: 'StopName', renderCell: (item) => item.name}
+        ],
+        rows: [],
+        center : []
+      });
+    
+
 
     const filterRoutes = async (inputValue) => {
         return await axios.get("http://127.0.0.1:2000/get_routes", {
@@ -69,6 +100,7 @@ export const MapsAndSchedules = () => {
 
     const handleStopInputChange = (inputValue) => new Promise(resolve => resolve(filterStops(inputValue)));
 
+
     useEffect(() => {
         const getNearestDepartureTime = async (route, stop="") => {
             return await axios.get("http:///127.0.0.1:2000/get_closest_departure_time", { 
@@ -91,16 +123,31 @@ export const MapsAndSchedules = () => {
                         stopName: route[2],
                         timeUntilDeparture: route[3]
                     });
+                    coordinates.rows.push({
+                        latitude: route[4],
+                        longitude: route[5],
+                        name : route[2]
+                    });
                 });
+                const avgLatitude = coordinates.rows.reduce((sum, point) => sum + point.latitude, 0) / coordinates.rows.length;
+                const avgLongitude = coordinates.rows.reduce((sum, point) => sum + point.longitude, 0) / coordinates.rows.length;
+                setMapData({
+                    columns : coordinates.columns,
+                    rows : coordinates.rows,
+                    center : [avgLongitude, avgLatitude]
+                })
                 setRoutesDisplayData(data);
                 console.log(res);
             });
         }
     }, [selectedRoute, selectedStop]);
 
+
     useEffect(() => {
         document.getElementsByClassName('App')[0].className = "App App-auth"
     }, []);
+
+    console.log('Coordinates.rows:', mapDisplayData.center);
 
     return (
         <div className="maps-and-schedules-container">
@@ -150,22 +197,39 @@ export const MapsAndSchedules = () => {
                 </div>
                 <div className="right">
                     <div className="leaflet-container">
+                    {mapDisplayData.rows.length > 0 ? (
+                        <MapContainer center={[mapDisplayData.center]} zoom={13}>
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                            {mapDisplayData.rows.map((item, index) => (
+                                <Marker key={index} position={[item.longitude, item.latitude]}>
+                                    <Popup> {item.name} </Popup>
+                                </Marker>
+                            ))}
+                        </MapContainer>
+                        ) : (
                         <MapContainer center={[-23.533773, -46.625290]} zoom={13}>
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             />
-                            {/* <Marker position={[48.8566, 2.3522]}>
+                          
+                            {/* {<Marker position={[48.8566, 2.3522]}>
                                 <Popup>
                                     A pretty CSS3 popup. <br /> Easily customizable.
                                 </Popup>
-                            </Marker> */}
+                            </Marker> } */}
                             <Marker position={[-23.533773, -46.625290]}>
-                                <Popup>
-                                    Sau Paulo. <br /> Add only when selecting a stop_name.
-                                </Popup>
+                            <Popup>
+                                <div>
+                                    Sao Paulo which is the center <br />
+                                </div>
+                             </Popup>
                             </Marker>
-                        </MapContainer>
+                          </MapContainer>
+                        )}
                     </div>
                 </div>
             </div>
@@ -173,3 +237,9 @@ export const MapsAndSchedules = () => {
     );
 
 };
+
+
+
+
+
+

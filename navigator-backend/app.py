@@ -93,11 +93,11 @@ def get_closest_departure_time():
 CASE
 WHEN MIN(TIMEDIFF(STR_TO_DATE(DepartureTime, "%T"), DATE_ADD(CURRENT_TIME, INTERVAL -3 HOUR))) < 0 THEN 'Next Closest Departure is Tomorrow'
 ELSE TIME_FORMAT(MIN(TIMEDIFF(STR_TO_DATE(DepartureTime, "%T"), DATE_ADD(CURRENT_TIME, INTERVAL -3 HOUR))), '%H hours %i minutes %i seconds')
-END AS Time_To_Departure 
+END AS Time_To_Departure, StopLon, StopLat 
 from Trips 
 left join Routes using (RouteId) 
 left join StopTimes using (TripId) 
-left join (select StopName, StopId from Stops) n using(StopId) 
+left join (select StopName, StopId, StopLon, StopLat from Stops) n using(StopId) 
 where RouteLongName like :route_name
 group by StopId, n.StopName, RouteLongName
 {'Having n.StopName like :stop_name' if request.args.get('stop_name') != '' else ''}
@@ -159,10 +159,8 @@ WHERE RouteLongName = :route_name;"""),
 
 @app.route('/add_review', methods=['POST'])
 def add_review():
-
-    
+    print(" got till here ")
     data = request.get_json()['data']
-
     pool = connect_with_connector()
     with pool.connect() as db_conn:
         db_conn.execute(
@@ -181,8 +179,6 @@ VALUES (:route_id, :user_id, :comments, :star_rating);"""),
 
 @app.route('/update_review', methods=['POST'])
 def update_review():
-
-    
     data = request.get_json()['data']
 
     pool = connect_with_connector()
@@ -272,6 +268,7 @@ def login() :
 
 @app.route("/logout", methods=["POST"])
 def logout_user():
+    print(session)
     if 'user_id' in session and 'user_name' in session:
         session.pop("user_id")
         session.pop("user_name")

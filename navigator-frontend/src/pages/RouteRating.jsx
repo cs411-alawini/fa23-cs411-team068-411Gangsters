@@ -100,7 +100,11 @@ export const RouteRating = () => {
                 star_rating: selectedRating,
                 comments: e.target.comments.value
             }
-        }).then(async (res) => {
+        },
+        {
+            withCredentials: true, //include credentials
+        }
+        ).then(async (res) => {
             await getReviewSummary(selectedRoute['value'][0]);
             await getReviews(selectedRoute['value'][0]);
             alert(res.data);
@@ -111,6 +115,9 @@ export const RouteRating = () => {
     const deleteReviewHandler = async (e) => {
         return await axios.get("http://127.0.0.1:2000/delete_review", {
                 params: { route_id: reviewSummaryData.RouteId }
+            },
+            {
+                withCredentials: true, //include credentials
             }).then(async (res) => {
                 await getReviewSummary(selectedRoute['value'][0]);
                 await getReviews(selectedRoute['value'][0]);
