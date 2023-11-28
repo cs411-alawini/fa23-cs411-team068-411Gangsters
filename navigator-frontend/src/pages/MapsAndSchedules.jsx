@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
+import { useNavigate } from 'react-router-dom';
 import {MapContainer , TileLayer, Marker, Popup} from 'react-leaflet';
 import '../assets/styles/MapsAndSchedules.css';
 import { CustomTable } from '../elements/CustomTable';
@@ -68,12 +69,6 @@ export const MapsAndSchedules = () => {
 
     const handleStopInputChange = (inputValue) => new Promise(resolve => resolve(filterStops(inputValue)));
 
-    const logoutHandler = async () => {
-        return await axios.post("http://127.0.0.1:2000/logout").then((res) => {
-            alert(res.data);
-        });
-    };
-
     useEffect(() => {
         const getNearestDepartureTime = async (route, stop="") => {
             return await axios.get("http:///127.0.0.1:2000/get_closest_departure_time", { 
@@ -110,7 +105,6 @@ export const MapsAndSchedules = () => {
     return (
         <div className="maps-and-schedules-container">
             <Header 
-                logoutHandler={logoutHandler} 
                 linkUnderline="mapsAndSchedules"
             />
             <div className="content">

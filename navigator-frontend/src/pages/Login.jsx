@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import '../assets/styles/auth.css';
 import logo from '../assets/images/logo.png'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 // Two default xsrf token headers for axios. 
 // These headers are used to protect against CSRF (Cross-Site Request Forgery) attacks.
@@ -11,9 +11,10 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 // The Login page component
 // The onFormSwitch prop is the function used to switch between the login and register pages
-export const Login = ({ pageSwitch }) => {
+export const Login = () => {
     const [username, setUser] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
@@ -23,24 +24,27 @@ export const Login = ({ pageSwitch }) => {
     // login, and logs the response to the console. The request includes the values of the "username" and "password" states.
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios({
-                method: 'post',
-                url: 'http://127.0.0.1:2000/login',
-                params: {
-                    username: username,
-                    password: password
-                }
-              })
-              navigate("/mapsAndSchedules");
-              console.log(response.status);
-        } catch (e) {
-            setErrorMessage("Please re-enter your credentials or check that you are registered");
-        }
+        await axios({
+            method: 'post',
+            url: 'http://127.0.0.1:2000/login',
+            params: {
+                username: username,
+                password: password,
+            },
+            withCredentials: "include"
+          }).then((_) => {
+            navigate('/mapsAndSchedules')
+          }).catch((err) => {
+            alert(err.response.data)
+          });
     }
+
+    const [searchParams] = useSearchParams();
     
     useEffect(() => {
-        document.getElementsByClassName('App')[0].className = "App App-unauth"
+        document.getElementsByClassName('App')[0].className = "App App-unauth";
+        if(searchParams.get('action') === "logout")
+            alert("You have been logged out.");
     }, []);
 
     return (
@@ -59,6 +63,7 @@ export const Login = ({ pageSwitch }) => {
                 <button type="submit">LOGIN</button>
             </form>
             <button className="link-btn" onClick={() => navigate("/register")}>Don't have an account? Register Here.</button>
+            {errorMessage && ( <p className="error"> <div style={{ color: 'red' }}> {errorMessage}</div> </p>)}
             {errorMessage && ( <p className="error"> <div style={{ color: 'red' }}> {errorMessage}</div> </p>)}
         </div>
     )

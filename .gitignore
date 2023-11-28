@@ -2,4 +2,7 @@ venv/
 .env
 fa23-cs411-sao-paulo-navigator-390dc4308dfc.json
 fa23-cs411-sao-paulo-navigator-32d9b595a24f.json
-fa23-cs411-sao-paulo-navigator-6ab5cc4ce1d2.json
+fa23-cs411-sao-paulo-navigator-6ab5cc4ce1d2.jsonfa23-cs411-sao-paulo-navigator-6ab5cc4ce1d2.json
+flask_session/
+__pycache__/
+.DS_Store

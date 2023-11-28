@@ -64,12 +64,6 @@ export const RouteRating = () => {
 
     const handleRouteInputChange = (inputValue) => new Promise(resolve => resolve(filterRoutes(inputValue)));
 
-    const logoutHandler = async () => {
-        return await axios.post("http://127.0.0.1:2000/logout").then((res) => {
-            alert(res.data);
-        });
-    };
-
     const getReviewSummary = async (route) => {
         return await axios.get("http://127.0.0.1:2000/get_review_summary", {
             params: { route_name: route }
@@ -133,15 +127,15 @@ export const RouteRating = () => {
     
     useEffect(() => {
         const getUserDetails = async () => {
-            return await axios.get("http://127.0.0.1:2000/get_curr_user").then((res) => {
+
+            return await axios({
+                url: "http://127.0.0.1:2000/get_curr_user",
+                method: "GET",
+                withCredentials: "include"
+            }).then((res) => {
                 if(Array.isArray(res.data)) {
                     setCurrUserName(res.data[1]);
                 }
-                /* ONLY FOR TESTING PURPOSES */
-                else {
-                    setCurrUserName("mariela14");
-                }
-                /* ONLY FOR TESTING PURPOSES */
             });
         };
 
@@ -152,7 +146,6 @@ export const RouteRating = () => {
     return (
         <div className="route-rating-container">
             <Header 
-                logoutHandler={logoutHandler} 
                 linkUnderline="routeRating" 
             />
             <div className="content">

@@ -2,10 +2,26 @@ import '../assets/styles/Header.css';
 import logo from '../assets/images/logo.png'
 import React from 'react';
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-export const Header = ({ logoutHandler, linkUnderline }) => {
+export const Header = ({ linkUnderline }) => {
     let mapsAndSchedulesClasses = "header-link";
     let routeRatingClasses = "header-link";
+
+    const navigate = useNavigate();
+
+    const logoutHandler = async () => {
+        return await axios({
+            method: 'post',
+            url: "http://127.0.0.1:2000/logout",
+            withCredentials: "include"
+        }).then((res) => {
+            alert(res.data);
+            navigate('/login?action=logout')
+        });
+    };
+
     if(linkUnderline === "mapsAndSchedules")
         mapsAndSchedulesClasses += " underline";
     else if(linkUnderline === "routeRating")

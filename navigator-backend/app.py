@@ -10,13 +10,16 @@ from flask_cors import CORS
 from flask import request, session
 from flask_session import Session
 
-
 app = Flask(__name__)
-load_dotenv()
+SESSION_TYPE = 'filesystem'
+app.config.from_object(__name__)
 app.secret_key = os.getenv("APP_SECRET_KEY")
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = True
+Session(app)
+CORS(app, supports_credentials=True)
+load_dotenv()
 
-
-CORS(app)
 
 def connect_with_connector() -> sqlalchemy.engine.base.Engine:
     """
@@ -25,14 +28,10 @@ def connect_with_connector() -> sqlalchemy.engine.base.Engine:
     Uses the Cloud SQL Python Connector package.
     """
 
-
-
     instance_connection_name = os.getenv("INSTANCE_CONNECTION_NAME")  # e.g. 'project:region:instance'
     db_user = os.getenv("DB_USER")  # e.g. 'my-db-user'
     db_pass = os.getenv("DB_PASS")  # e.g. 'my-db-password'
     db_name = os.getenv("DB_NAME")  # e.g. 'my-database'
-
-
 
     ip_type = IPTypes.PUBLIC
 
@@ -205,9 +204,6 @@ WHERE UserId = :user_id AND RouteId = :route_id;"""),
 
 @app.route('/delete_review', methods=['GET'])
 def delete_review():
-
-    
-
     pool = connect_with_connector()
     with pool.connect() as db_conn:
         db_conn.execute(
@@ -264,10 +260,8 @@ def login() :
         ).fetchone()
         print(row)
         if row != None:
-            # print(" Here now ")
             session['user_id'] = row[0]
             session['user_name'] = row[1]
-            # print(" Login Successful ")
             pool.dispose()
             print("login successful")
             return "Login Successful", 200
@@ -286,5 +280,8 @@ def logout_user():
 @app.route("/get_curr_user", methods=["GET"])
 def get_curr_user():
     if 'user_id' in session and 'user_name' in session:
-        return (session.get('user_id'), session.get('user_name')), 200
+        return [session.get('user_id'), session.get('user_name')], 200
     return "No user logged in", 200
+
+if __name__ == "__main__":
+    app.run(debug=True, threaded=True)
