@@ -83,6 +83,21 @@ def get_stops():
     pool.dispose()
     return json.dumps(ans)
 
+@app.route('/get_route_price', methods=['GET'])
+def get_route_price():
+    pool = connect_with_connector()
+    with pool.connect() as db_conn:
+        row = db_conn.execute(
+            statement=sqlalchemy.text(f"""select fa.Price 
+from FareAttributes fa 
+join FareRules fr using(FareId) 
+join Routes r using (RouteId) 
+where r.RouteLongName = :route_name"""),
+            parameters=dict(route_name=f"{request.args.get('route_name')}")
+        ).fetchone()
+    pool.dispose()
+    return json.dumps(row, use_decimal=True)
+
 @app.route('/get_closest_departure_time', methods=['GET'])
 def get_closest_departure_time():
     pool = connect_with_connector()
@@ -229,7 +244,7 @@ def register():
             current_user_count = db_conn.execute(
                 statement=sqlalchemy.text("SELECT UserId FROM Users ORDER BY UserId DESC LIMIT 1")).fetchone()
             try :
-                r = db_conn.execute(
+                db_conn.execute(
                     statement=sqlalchemy.text("INSERT INTO Users VALUES(:userid, :username, :password)"), 
                     parameters=dict(userid = f"{current_user_count[0] + 1}", username=f"{username}", password=f"{password}")
                 )

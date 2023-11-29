@@ -62,6 +62,7 @@ export const MapsAndSchedules = () => {
     };
 
     const [routesDisplayData, setRoutesDisplayData] = useState(data);
+    const [routePrice, setRoutePrice] = useState();
     const [selectedRoute, setSelectedRoute] = useState({});
     const [selectedStop, setSelectedStop] = useState({});
     const [mapDisplayData, setMapData] = useState({
@@ -139,8 +140,25 @@ export const MapsAndSchedules = () => {
                 setRoutesDisplayData(data);
                 console.log(res);
             });
+
+            
         }
     }, [selectedRoute, selectedStop]);
+
+    useEffect(() => {
+        const getRoutePrice = async (route) => {
+            return await axios.get("http:///127.0.0.1:2000/get_route_price", { 
+                params: { route_name: route }
+            }).then((res) => {
+                return res.data;
+            });
+        };
+        if (selectedRoute !== undefined && "value" in selectedRoute)
+            void getRoutePrice(selectedRoute['value'][0]).then((res) => {
+                setRoutePrice(res['Price']);
+            });
+    }, [selectedRoute]);
+
 
 
     useEffect(() => {
@@ -179,6 +197,11 @@ export const MapsAndSchedules = () => {
                         />
                     </div>
                     <div className="routes-display">
+                        <div className="route-price">
+                            {
+                                routePrice !== undefined ? `Route Price: ${routePrice} BRL` : ""
+                            }
+                        </div>
                         <div className="retrieved-at">
                             { 
                                 routesDisplayData.rows.length > 0 ? `Retrieved at: ${new Date().toLocaleTimeString()}` : ""

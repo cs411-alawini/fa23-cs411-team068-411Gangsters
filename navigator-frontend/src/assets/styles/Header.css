@@ -37,6 +37,7 @@
     text-decoration: underline;
 }
 
-.logout {
+.header-username {
     margin-left: auto;
+    cursor: default;
 }
