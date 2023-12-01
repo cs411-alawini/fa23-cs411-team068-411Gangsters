@@ -113,8 +113,8 @@ export const RouteRating = () => {
     };
 
     const deleteReviewHandler = async (e) => {
-        return await axios.get("http://127.0.0.1:2000/delete_review", {
-                params: { route_id: reviewSummaryData.RouteId }
+        return await axios.post("http://127.0.0.1:2000/delete_review", {
+                data: { route_id: reviewSummaryData.RouteId }
             },
             {
                 withCredentials: true, //include credentials

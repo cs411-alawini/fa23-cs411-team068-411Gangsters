@@ -195,7 +195,6 @@ VALUES (:route_id, :user_id, :comments, :star_rating);"""),
 @app.route('/update_review', methods=['POST'])
 def update_review():
     data = request.get_json()['data']
-
     pool = connect_with_connector()
     with pool.connect() as db_conn:
         db_conn.execute(
@@ -213,16 +212,18 @@ WHERE UserId = :user_id AND RouteId = :route_id;"""),
     pool.dispose()
     return "Review Updated", 200
 
-@app.route('/delete_review', methods=['GET'])
+@app.route('/delete_review', methods=['POST'])
 def delete_review():
     pool = connect_with_connector()
+    data = request.get_json()['data']
+    print(session.get('route_id'))
     with pool.connect() as db_conn:
         db_conn.execute(
             statement=sqlalchemy.text(f"""DELETE FROM Reviews
 WHERE RouteId = :route_id AND UserId = :user_id;"""),
             parameters=dict(
                 user_id=session.get('user_id'),
-                route_id=request.args.get('route_id')
+                route_id=data['route_id'] #request.args.get('route_id')
             )
         )
         db_conn.commit()
