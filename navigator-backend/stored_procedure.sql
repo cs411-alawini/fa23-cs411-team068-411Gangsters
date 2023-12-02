@@ -1,4 +1,6 @@
-CREATE PROCEDURE StoreAverageRatings(@routeID VARCHAR(10))
+DELIMITER //
+
+CREATE PROCEDURE StoreAverageRatings()
 BEGIN
     DECLARE avgRating REAL;
     DECLARE routeId VARCHAR(10);
@@ -38,7 +40,7 @@ BEGIN
     
     CLOSE curRoute;
 
-    SELECT n.route_qualifier, r.RouteLongName
+    SELECT ANY_VALUE(n.route_qualifier) as qualifier, r.RouteLongName
     from NewTable n
     left join Routes r on r.RouteId =  n.routeID
     group by route_qualifier, r.RouteLongName, n.avgRating
@@ -46,4 +48,6 @@ BEGIN
     limit 100;
 
 
-END     
+END //
+
+DELIMITER ;
