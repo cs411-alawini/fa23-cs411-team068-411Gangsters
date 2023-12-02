@@ -152,6 +152,7 @@ GROUP BY r.RouteId;"""),
             )
         ).fetchone()
         ans = row
+        print(ans)
     pool.dispose()
     return json.dumps(ans, use_decimal=True)
 
@@ -169,6 +170,30 @@ WHERE RouteLongName = :route_name;"""),
             )
         ).fetchall()
         ans = row
+    pool.dispose()
+    return json.dumps(ans, use_decimal=True)
+
+@app.route('/get_route_qualifiers', methods=['GET'])
+def get_route_qualifiers():
+    print("got here")
+    pool = connect_with_connector()
+    ans = []
+    with pool.connect() as db_conn:
+        db_conn.execute(sqlalchemy.text("CALL StoreAverageRatings();"))
+        result = db_conn.execute(
+            sqlalchemy.text("""SELECT ANY_VALUE(n.route_qualifier) AS qualifier, r.RouteLongName
+            FROM NewTable n
+            LEFT JOIN Routes r ON r.RouteId =  n.routeID
+            WHERE RouteLongName = :route_name
+            GROUP BY r.RouteLongName, n.avgRating
+            ORDER BY n.avgRating DESC
+            LIMIT 100;"""),
+            parameters=dict(
+                route_name=f"{request.args.get('route_name')}"
+            )
+        ).fetchone()
+        ans = result
+        print(ans)
     pool.dispose()
     return json.dumps(ans, use_decimal=True)
 

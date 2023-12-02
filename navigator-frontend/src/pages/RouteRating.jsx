@@ -51,6 +51,7 @@ export const RouteRating = () => {
     const [reviewsData, setReviewsData] = useState([]);
     const [selectedRating, setSelectedRating] = useState(0);
     const [currUserName, setCurrUserName] = useState();
+    const [routeQuality, setRouteQuality] = useState();
 
     const filterRoutes = async (inputValue) => {
         return await axios.get("http://127.0.0.1:2000/get_routes", {
@@ -72,6 +73,15 @@ export const RouteRating = () => {
             if(Object.keys(res.data).length > 0) {
                 setNetReviews(Object.values(res.data).filter((a) => Number.isInteger(a)).reduce((a, b) => a + b, 0));
             }
+        });
+    };
+
+    const getRouteQuality = async (route) => {
+        return await axios.get("http://127.0.0.1:2000/get_route_qualifiers", {
+            params: { route_name: route }
+        }).then((res) => {
+            console.log(res.data['qualifier']);
+            setRouteQuality(res.data['qualifier']);
         });
     };
 
@@ -107,6 +117,7 @@ export const RouteRating = () => {
         ).then(async (res) => {
             await getReviewSummary(selectedRoute['value'][0]);
             await getReviews(selectedRoute['value'][0]);
+            await getRouteQuality(selectedRoute['value'][0]);
             alert(res.data);
 
         });
@@ -121,6 +132,7 @@ export const RouteRating = () => {
             }).then(async (res) => {
                 await getReviewSummary(selectedRoute['value'][0]);
                 await getReviews(selectedRoute['value'][0]);
+                await getRouteQuality(selectedRoute['value'][0]);
                 alert(res.data)
             });
     };
@@ -129,6 +141,7 @@ export const RouteRating = () => {
         if (selectedRoute !== undefined && "value" in selectedRoute) {
             void getReviewSummary(selectedRoute['value'][0]);
             void getReviews(selectedRoute['value'][0]);
+            void getRouteQuality(selectedRoute['value'][0]);
         }
     }, [selectedRoute]);
     
@@ -183,6 +196,9 @@ export const RouteRating = () => {
                     <>
                         <div className="review-summary-container">
                             <h2>Review Summary</h2>
+                            <div className="route-quality">
+                                <h5>Route quality indicator: {routeQuality}</h5>
+                            </div>
                             <div className="ratings">
                                 <div>5</div> <ProgressBar bgColor='rgba(243, 190, 66)' 
                                     completed={reviewSummaryData.FiveStarRatings.toString()} 
