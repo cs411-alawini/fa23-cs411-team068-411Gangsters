@@ -71,7 +71,7 @@ CREATE TABLE StopTimes (StopId INT,
 	ArrivalTime VARCHAR(8),
 	DepartureTime VARCHAR(8),
 	StopSequence INT,
-       PRIMARY KEY(TripId, StopSequence);
+       PRIMARY KEY(TripId, StopSequence),
        FOREIGN KEY (StopId) REFERENCES Stops(StopId) ON DELETE CASCADE,
        FOREIGN KEY (TripId) REFERENCES Trips(TripId) ON DELETE CASCADE
 );
@@ -91,7 +91,7 @@ CREATE TABLE FareRules(  RouteId VARCHAR(10),
 	OriginId VARCHAR(255),
 	DestinationId VARCHAR(255),
 	ContainsId VARCHAR(255),
-        PRIMARY KEY(RouteId, FareId);
+        PRIMARY KEY(RouteId, FareId),
         FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE,
         FOREIGN KEY(FareId) REFERENCES FareAttributes(FareId) ON DELETE CASCADE
 
@@ -102,7 +102,7 @@ CREATE TABLE Reviews (
 	UserId INT,
 	Comments VARCHAR(1000),
 	starRating INT,
-        PRIMARY KEY(RouteId, UserId);
+        PRIMARY KEY(RouteId, UserId),
         FOREIGN KEY(RouteId) REFERENCES Routes(RouteId) ON DELETE CASCADE,
         FOREIGN KEY(UserId) REFERENCES Users(UserId) ON DELETE CASCADE
 );
