@@ -47,7 +47,7 @@ export const Header = ({ linkUnderline }) => {
         routeRatingClasses += " underline";
     return (
         <div className="header">
-            <img src={logo} width={84} alt="logo" />
+            <Link to="https://www.sptrans.com.br/terminais/jardim-britania/"><img src={logo} width={84} alt="logo" /></Link>
             <div className={mapsAndSchedulesClasses}>
                 <Link to="/mapsAndSchedules">Maps and Schedules</Link>
             </div>

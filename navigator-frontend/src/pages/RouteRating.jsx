@@ -80,8 +80,8 @@ export const RouteRating = () => {
         return await axios.get("http://127.0.0.1:2000/get_route_qualifiers", {
             params: { route_name: route }
         }).then((res) => {
-            console.log(res.data['qualifier']);
-            setRouteQuality(res.data['qualifier']);
+            if(res.data != null && Object.keys(res.data).length > 0)
+                setRouteQuality(res.data['qualifier']);
         });
     };
 
